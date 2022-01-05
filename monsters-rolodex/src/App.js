@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import CardList from "./Components/CardList/CardList";
+import Search from "./Components/SearchBox/Search";
 
 export default class App extends Component {
   constructor() {
@@ -45,7 +46,11 @@ export default class App extends Component {
     const { monsters, filteredArray } = this.state;
     return (
       <div>
-        <input type="text" onChange={this.debouncedSearch.bind(this)}></input>
+        <h1 id="main-heading">Monsters Rolodex</h1>
+        <Search
+          handleSearch={this.debouncedSearch.bind(this)}
+          placeholder={"Search Monsters"}
+        />
         <CardList
           monsters={filteredArray.length > 0 ? filteredArray : monsters}
         />

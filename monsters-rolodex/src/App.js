@@ -1,14 +1,32 @@
 import React, { Component } from "react";
 
-import CardList from "./Components/CardList";
+import CardList from "./Components/CardList/CardList";
 
 export default class App extends Component {
   constructor() {
     super();
     this.state = {
       monsters: [],
+      filteredArray: [],
     };
   }
+
+  onSearch() {
+    let clearTimeoutId = null;
+    return function debouncedSearch(e) {
+      clearTimeout(clearTimeoutId);
+      let monsters = this.state.monsters;
+      clearTimeoutId = setTimeout(() => {
+        const matchingMonsters = monsters.filter((monster) =>
+          monster.name.toLowerCase().includes(e.target.value.toLowerCase())
+        );
+        console.log(matchingMonsters);
+        this.setState({ filteredArray: matchingMonsters });
+      }, 1000);
+    };
+  }
+
+  debouncedSearch = this.onSearch();
 
   componentDidMount() {
     // async function getData() {
@@ -24,10 +42,13 @@ export default class App extends Component {
   }
 
   render() {
-    const monsters = this.state.monsters;
+    const { monsters, filteredArray } = this.state;
     return (
       <div>
-        <CardList monsters={monsters} />
+        <input type="text" onChange={this.debouncedSearch.bind(this)}></input>
+        <CardList
+          monsters={filteredArray.length > 0 ? filteredArray : monsters}
+        />
       </div>
     );
   }

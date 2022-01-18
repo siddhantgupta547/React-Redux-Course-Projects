@@ -7,9 +7,11 @@ import logo from '../crown.svg';
 function Navbar() {
   return (
     <div className="navbar">
-      <div className="logo-container">
-        <img src={logo} alt="Logo" />
-      </div>
+      <Link to="/">
+        <div className="logo-container">
+          <img src={logo} alt="Logo" />+
+        </div>
+      </Link>
       <div className="options">
         <Link to="/shop" className="option">
           Shop
